@@ -15,7 +15,7 @@ small{color:#666}
 </head>
 <body>
 <div class="box">
-<h1>🧱 HEAVENGATE CONSTRUCTION</h1>
+<h1>🧱 HEAVENSGATE CONSTRUCTION</h1>
 <p>Blocks & Cement Estimator</p>
 <h2>SUBSTRUTURE (FOUNDATION)</h2>
 <h3>Excavation</h3>
@@ -33,12 +33,19 @@ small{color:#666}
 <input type="number" id="latWidth" placeholder="e.g. 8"><br>
 <label>Laterite Thickness (m)</label><br>
 <input type="number" id="latThick" value="0.3"><br>
-
-<h3>Hardcore (Boulders) 0.30m</h3>
-<p><small>Uses same Length x Width x 0.30</small></p>
-
-<h3>DPC Slab 0.05m</h3>
-<p><small>Uses same Length x Width x 0.05</small></p>
+<label>Hardcore Length (m)</label><br>
+<input type="number" id="hardLength" placeholder="e.g. 10"><br>
+<label>Hardcore Breadth / Width (m)</label><br>
+<input type="number" id="hardWidth" placeholder="e.g. 8"><br>
+<label>Hardcore Depth / Thickness (m)</label><br>
+<input type="number" id="hardThick" value="0.3"><br>
+<h3>DPC Concrete Slab</h3>
+<label>DPC Length (m)</label><br>
+<input type="number" id="dpcLength" placeholder="e.g. 10"><br>
+<label>DPC Breadth / Width (m)</label><br>
+<input type="number" id="dpcWidth" placeholder="e.g. 8"><br>
+<label>DPC Thickness (m)</label><br>
+<input type="number" id="dpcThick" value="0.05"><br>
 
 <h3>Foundation Block Work</h3>
 <label>Foundation Wall Length (m)</label><br>
@@ -104,8 +111,14 @@ function calculate(){
 let latW = get('latWidth') || 0;
 let latT = get('latThick') || 0;
 let latVol = latL * latW * latT;
-let hardVol = latL * latW * 0.30;
-let dpcVol = latL * latW * 0.05;
+let hardL = get('hardLength') || 0;
+let hardW = get('hardWidth') || 0;
+let hardT = get('hardThick') || 0;
+let hardVol = hardL * hardW * hardT;
+let dpcL = get('dpcLength') || 0;
+let dpcW = get('dpcWidth') || 0;
+let dpcT = get('dpcThick') || 0;
+let dpcVol = dpcL * dpcW * dpcT;
 let dpcCement = dpcVol * 6;
 let fWL = get('fWallLength') || 0;
 let fWH = get('fWallHeight') || 0;
