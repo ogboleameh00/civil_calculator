@@ -58,22 +58,26 @@ small{color:#666}
 </div>
 <script>
 function calculate(){
-  let l = parseFloat(document.getElementById('length').value);
-  let h = parseFloat(document.getElementById('height').value);
-  if(!l || !h){
-    document.getElementById('result').innerHTML = "Abeg enter Length and Height first!";
-    return;
-  }
+  let get = id => parseFloat(document.getElementById(id).value) || 0;
+  let excVol = get('excLength') * get('excWidth') * get('excDepth');
+  let concVol = get('concLength') * get('concWidth') * get('concThick');
+  let padVol = get('padNo') * get('padLength') * get('padWidth') * get('padDepth');
+  let raftVol = get('raftLength') * get('raftWidth') * get('raftDepth');
+  let l = get('length');
+  let h = get('height');
   let area = l * h;
   let blocks = Math.ceil(area * 12.5);
   let cement = (blocks * 0.0168).toFixed(1);
   let sand = (area * 0.05).toFixed(2);
   document.getElementById('result').innerHTML =
-    "Wall Area: " + area + " m²<br>" +
-    "🧱 Blocks Needed: <b>" + blocks + "</b><br>" +
-    "💰 Cement Needed: <b>" + cement + " Bags</b><br>" +
-    "🏖️ Sand Needed: <b>" + sand + " Tonnes</b>";
-}
-</script>
+    '<b>Excavation (Strip):</b> ' + excVol.toFixed(2) + ' m3<br>' +
+    '<b>Concrete in Foundation:</b> ' + concVol.toFixed(2) + ' m3<br>' +
+    '<b>Pad Excavation:</b> ' + padVol.toFixed(2) + ' m3<br>' +
+    '<b>Raft Excavation:</b> ' + raftVol.toFixed(2) + ' m3<br>' +
+    'Wall Area: ' + area.toFixed(2) + ' m2<br>' +
+    '🧱 Blocks Needed: <b>' + blocks + '</b><br>' +
+    '💰 Cement Needed: <b>' + cement + '</b> Bags<br>' +
+    '🏖️ Sand Needed: <b>' + sand + '</b> Tonnes';
+}</script>
 </body>
 </html>
