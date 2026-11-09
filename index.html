@@ -50,7 +50,45 @@ small{color:#666}
 <input type="number" id="raftDepth" placeholder="e.g. 0.6"><br><br>
 <label>Wall Length (in metres)</label><br>
 <input type="number" id="length" placeholder="e.g. 10"><br>
-<label>Wall Height (in metres)</label><br>
+<label>Wall Height (in metres)</label><br><h3>🔩 Foundation Column Reinforcement</h3>
+<label>No. of Columns</label><br>
+<input type="number" id="numCols" value="20"><br>
+<label>Column Main Bar</label><br>
+<select id="colBar">
+<option value="16">Y16 - 1.58 Kg/m</option>
+<option value="20">Y20 - 2.47 Kg/m</option>
+<option value="25">Y25 - 3.86 Kg/m</option>
+<option value="32">Y32 - 6.32 Kg/m</option>
+<option value="40">Y40 - 9.88 Kg/m</option>
+<option value="50">Y50 - 15.43 Kg/m</option>
+</select><br>
+<label>No. of Bars per Column</label><br>
+<select id="numBars">
+<option value="4">4 Bars</option>
+<option value="6">6 Bars</option>
+<option value="8">8 Bars</option>
+</select><br>
+
+<h3>🔩 Ground Beam / Foundation Beam</h3>
+<label>Total Beam Length (m)</label><br>
+<input type="number" id="beamLength" placeholder="e.g. 80"><br>
+<label>Beam Main Bar</label><br>
+<select id="beamBar">
+<option value="16">Y16 - 1.58 Kg/m</option>
+<option value="20">Y20 - 2.47 Kg/m</option>
+<option value="25">Y25 - 3.86 Kg/m</option>
+</select><br>
+<label>Total Main Bars (Top + Bottom)</label><br>
+<select id="beamBars">
+<option value="8">8 Bars (4 Top + 4 Bottom)</option>
+<option value="6">6 Bars (3 Top + 3 Bottom)</option>
+<option value="4">4 Bars (2 Top + 2 Bottom)</option>
+</select><br>
+<label>Stirrup Bar</label><br>
+<select id="stirBar">
+<option value="10">Y10 - 0.617 Kg/m</option>
+<option value="12">Y12 - 0.888 Kg/m</option>
+</select><br>
 <input type="number" id="height" placeholder="e.g. 3"><br>
 <button onclick="calculate()">CALCULATE</button>
 <div class="result" id="result">Result go show here 👇</div>
@@ -72,7 +110,25 @@ function calculate(){
     let totalConc = concVol + padVol + raftVol;
   let wood = (totalConc * 4).toFixed(2);
   let boards = Math.ceil(totalConc * 4 / 2.5);
-  let steel = (totalConc * 100).toFixed(1);
+  let n = get('numCols');
+let d = parseFloat(document.getElementById('colBar').value);
+let bars = parseFloat(document.getElementById('numBars').value);
+let wt = (d*d)/162;
+let padSteel = n * 11.19;
+let mainSteel = n * bars * 1.4 * wt;
+let ringSteel = n * 2.47;
+let colTotal = padSteel + mainSteel + ringSteel;
+let bl = get('beamLength');
+let bd = parseFloat(document.getElementById('beamBar').value);
+let bBars = parseFloat(document.getElementById('beamBars').value);
+let sBar = parseFloat(document.getElementById('stirBar').value);
+let bWt = (bd*bd)/162;
+let sWt = (sBar*sBar)/162;
+let beamMain = bBars * bl * bWt;
+let stirNo = bl > 0 ? Math.ceil(bl / 0.15) + 1 : 0;
+let beamStir = stirNo * 1.25 * sWt;
+let beamTotal = beamMain + beamStir;
+let steel = (colTotal + beamTotal).toFixed(1);
   document.getElementById('result').innerHTML =
     '<b>Excavation (Strip):</b> ' + excVol.toFixed(2) + ' m3<br>' +
     '<b>Concrete in Foundation:</b> ' + concVol.toFixed(2) + ' m3<br>' +
@@ -83,7 +139,9 @@ function calculate(){
     '💰 Cement Needed: <b>' + cement + '</b> Bags<br>' +
     '🏖️ Sand Needed: <b>' + sand + '</b> Tonnes<br>' +
 '🪵 Wood Formwork: <b>' + wood + '</b> m2 (' + boards + ' Boards)<br>' +
-'🔩 Reinforcement Steel: <b>' + steel + '</b> Kg';
+    '🔩 Foundation Column: <b>' + colTotal.toFixed(1) + '</b> Kg<br>' +
+'🔩 Ground Beam: <b>' + beamTotal.toFixed(1) + '</b> Kg<br>' +
+'🔩 TOTAL Steel: <b>' + steel + '</b> Kg<br>'
 }</script>
 </body>
 </html>
