@@ -26,6 +26,25 @@ small{color:#666}
 <label>Excavation Depth (m)</label><br>
 <input type="number" id="excDepth" placeholder="e.g. 0.9"><br><br>
   <h3>Concrete in Foundation</h3>
+  <h3>Laterite Filling</h3>
+<label>Laterite Length (m)</label><br>
+<input type="number" id="latLength" placeholder="e.g. 10"><br>
+<label>Laterite Width (m)</label><br>
+<input type="number" id="latWidth" placeholder="e.g. 8"><br>
+<label>Laterite Thickness (m)</label><br>
+<input type="number" id="latThick" value="0.3"><br>
+
+<h3>Hardcore (Boulders) 0.30m</h3>
+<p><small>Uses same Length x Width x 0.30</small></p>
+
+<h3>DPC Slab 0.05m</h3>
+<p><small>Uses same Length x Width x 0.05</small></p>
+
+<h3>Foundation Block Work</h3>
+<label>Foundation Wall Length (m)</label><br>
+<input type="number" id="fWallLength" placeholder="e.g. 50"><br>
+<label>Foundation Height (m)</label><br>
+<input type="number" id="fWallHeight" value="0.9"><br>
 <label>Concrete Length (m)</label><br>
 <input type="number" id="concLength" placeholder="e.g. 20"><br><br>
 <label>Concrete Width (m)</label><br>
@@ -81,6 +100,17 @@ function calculate(){
   let padVol = get('padNo') * get('padLength') * get('padWidth') * get('padDepth');
   let raftVol = get('raftLength') * get('raftWidth') * get('raftDepth');
   let l = get('length');
+  let latL = get('latLength') || 0;
+let latW = get('latWidth') || 0;
+let latT = get('latThick') || 0;
+let latVol = latL * latW * latT;
+let hardVol = latL * latW * 0.30;
+let dpcVol = latL * latW * 0.05;
+let dpcCement = dpcVol * 6;
+let fWL = get('fWallLength') || 0;
+let fWH = get('fWallHeight') || 0;
+let fBlocks = fWL * fWH * 10;
+let fCement = fBlocks / 50;
   let h = get('height');
   let area = l * h;
   let blocks = Math.ceil(area * 12.5);
@@ -109,6 +139,10 @@ let beamStir = stirNo * 1.25 * sWt;
 let beamTotal = beamMain + beamStir;
 let steel = (colTotal + beamTotal).toFixed(1);
   document.getElementById('result').innerHTML =
+    '<b>Laterite Filling:</b> ' + latVol.toFixed(2) + ' m³ (' + Math.ceil(latVol/10) + ' Trips)<br>' +
+'<b>Hardcore 0.30m:</b> ' + hardVol.toFixed(2) + ' m³ (' + Math.ceil(hardVol/10) + ' Trips)<br>' +
+'<b>DPC Slab 0.05m:</b> ' + dpcVol.toFixed(2) + ' m³ - Cement: ' + Math.ceil(dpcCement) + ' bags<br>' +
+'<b>Foundation Blocks:</b> ' + Math.ceil(fBlocks) + ' blocks - Cement: ' + fCement.toFixed(1) + ' bags<br>' +
     '<b>Excavation (Strip):</b> ' + excVol.toFixed(2) + ' m3<br>' +
     '<b>Concrete in Foundation:</b> ' + concVol.toFixed(2) + ' m3<br>' +
     '<b>Pad Excavation:</b> ' + padVol.toFixed(2) + ' m3<br>' +
