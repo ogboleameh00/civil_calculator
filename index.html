@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civil Calculator - Blocks & Cement</title>
+<style>
+body{font-family:Arial;background:#f2f2f2;padding:20px;text-align:center}
+.box{background:white;padding:20px;border-radius:15px;max-width:400px;margin:auto;box-shadow:0 0 10px #ccc}
+h1{color:#1a73e8;font-size:22px}
+input{width:90%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:16px}
+button{background:#1a73e8;color:white;border:none;padding:14px;width:95%;border-radius:10px;font-size:18px;font-weight:bold}
+.result{margin-top:15px;background:#e8f0fe;padding:15px;border-radius:10px;font-size:18px;line-height:1.6}
+small{color:#666}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>🧱 Civil Calculator</h1>
+<p>Blocks & Cement Estimator</p>
+<label>Wall Length (in metres)</label><br>
+<input type="number" id="length" placeholder="e.g. 10"><br>
+<label>Wall Height (in metres)</label><br>
+<input type="number" id="height" placeholder="e.g. 3"><br>
+<button onclick="calculate()">CALCULATE</button>
+<div class="result" id="result">Result go show here 👇</div>
+<p><small>Built by Ogbole Ameh</small></p>
+</div>
+<script>
+function calculate(){
+  let l = parseFloat(document.getElementById('length').value);
+  let h = parseFloat(document.getElementById('height').value);
+  if(!l || !h){
+    document.getElementById('result').innerHTML = "Abeg enter Length and Height first!";
+    return;
+  }
+  let area = l * h;
+  let blocks = Math.ceil(area * 12.5);
+  let cement = (blocks * 0.0168).toFixed(1);
+  let sand = (area * 0.05).toFixed(2);
+  document.getElementById('result').innerHTML =
+    "Wall Area: " + area + " m²<br>" +
+    "🧱 Blocks Needed: <b>" + blocks + "</b><br>" +
+    "💰 Cement Needed: <b>" + cement + " Bags</b><br>" +
+    "🏖️ Sand Needed: <b>" + sand + " Tonnes</b>";
+}
+</script>
+</body>
+</html>
