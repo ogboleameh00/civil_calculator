@@ -69,6 +69,10 @@ function calculate(){
   let blocks = Math.ceil(area * 12.5);
   let cement = (blocks * 0.0168).toFixed(1);
   let sand = (area * 0.05).toFixed(2);
+    let totalConc = concVol + padVol + raftVol;
+  let wood = (totalConc * 4).toFixed(2);
+  let boards = Math.ceil(totalConc * 4 / 2.5);
+  let steel = (totalConc * 100).toFixed(1);
   document.getElementById('result').innerHTML =
     '<b>Excavation (Strip):</b> ' + excVol.toFixed(2) + ' m3<br>' +
     '<b>Concrete in Foundation:</b> ' + concVol.toFixed(2) + ' m3<br>' +
@@ -77,7 +81,9 @@ function calculate(){
     'Wall Area: ' + area.toFixed(2) + ' m2<br>' +
     '🧱 Blocks Needed: <b>' + blocks + '</b><br>' +
     '💰 Cement Needed: <b>' + cement + '</b> Bags<br>' +
-    '🏖️ Sand Needed: <b>' + sand + '</b> Tonnes';
+    '🏖️ Sand Needed: <b>' + sand + '</b> Tonnes<br>' +
+'🪵 Wood Formwork: <b>' + wood + '</b> m2 (' + boards + ' Boards)<br>' +
+'🔩 Reinforcement Steel: <b>' + steel + '</b> Kg';
 }</script>
 </body>
 </html>
