@@ -54,41 +54,20 @@ small{color:#666}
 <label>No. of Columns</label><br>
 <input type="number" id="numCols" value="20"><br>
 <label>Column Main Bar</label><br>
-<select id="colBar">
-<option value="16">Y16 - 1.58 Kg/m</option>
-<option value="20">Y20 - 2.47 Kg/m</option>
-<option value="25">Y25 - 3.86 Kg/m</option>
-<option value="32">Y32 - 6.32 Kg/m</option>
-<option value="40">Y40 - 9.88 Kg/m</option>
-<option value="50">Y50 - 15.43 Kg/m</option>
-</select><br>
+<input type="number" id="colBar" value="16" placeholder="e.g. 16, 20, 25"><br>
 <label>No. of Bars per Column</label><br>
-<select id="numBars">
-<option value="4">4 Bars</option>
-<option value="6">6 Bars</option>
-<option value="8">8 Bars</option>
-</select><br>
+<input type="number" id="numBars" value="4" placeholder="e.g. 6"><br>
 
 <h3>🔩 Ground Beam / Foundation Beam</h3>
 <label>Total Beam Length (m)</label><br>
 <input type="number" id="beamLength" placeholder="e.g. 80"><br>
 <label>Beam Main Bar</label><br>
-<select id="beamBar">
-<option value="16">Y16 - 1.58 Kg/m</option>
-<option value="20">Y20 - 2.47 Kg/m</option>
-<option value="25">Y25 - 3.86 Kg/m</option>
-</select><br>
+<input type="number" id="beamBar" value="16" placeholder="e.g. 16, 20"><br>
 <label>Total Main Bars (Top + Bottom)</label><br>
-<select id="beamBars">
-<option value="8">8 Bars (4 Top + 4 Bottom)</option>
-<option value="6">6 Bars (3 Top + 3 Bottom)</option>
-<option value="4">4 Bars (2 Top + 2 Bottom)</option>
-</select><br>
-<label>Stirrup Bar</label><br>
-<select id="stirBar">
-<option value="10">Y10 - 0.617 Kg/m</option>
-<option value="12">Y12 - 0.888 Kg/m</option>
-</select><br>
+
+<input type="number" id="beamBars" value="8" placeholder="e.g. 10"><br>
+<label>Stirrup / Link Bar</label><br>
+<input type="number" id="stirBar" value="10" placeholder="e.g. 10, 12"><br>
 <input type="number" id="height" placeholder="e.g. 3"><br>
 <button onclick="calculate()">CALCULATE</button>
 <div class="result" id="result">Result go show here 👇</div>
