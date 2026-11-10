@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEAVENSGATE - BOQ Calculator</title>
+<style>
+body{font-family:Arial;background:#f2f2f2;padding:12px}
+.card{background:#fff;border-radius:14px;padding:16px;max-width:560px;margin:auto}
+.top{background:#0b2a4a;color:#fff;padding:18px;border-radius:12px;text-align:center}
+.top h1{margin:0;font-size:28px;letter-spacing:1px}
+.top p{margin:4px;color:#ffcc00;font-weight:bold}
+label{font-weight:bold;font-size:13px}
+input,select{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #ddd;border-radius:10px;font-size:16px;box-sizing:border-box}
+button{background:#ff7a00;color:#fff;border:0;padding:16px;width:100%;border-radius:12px;font-size:18px;font-weight:bold;margin-top:8px}
+.btn2{background:#0b2a4a}
+.result{background:#eef7ee;padding:14px;border-radius:12px;margin-top:14px;line-height:1.8}
+.small{font-size:12px;color:#666;text-align:center}
+@media print{body{background:#fff} .hide-print{display:none} .card{box-shadow:none}}
+</style></head><body>
+<div class="card">
+<div class="top"><h1>HEAVENSGATE</h1><p>Bill of Quantities Calculator</p><small>For Engineers | Manual | Accurate | Works Offline</small></div>
+
+<label>Project Name</label><input id="proj" placeholder="Example: 4 Bedroom Duplex, Lekki">
+<label>Client Name</label><input id="client" placeholder="Example: Mr. Ade">
+<label>Engineer Name</label><input id="eng" placeholder="Example: Engineer Name">
+
+<p class="hide-print">Upload Drawing (For Reference Only):</p>
+<input class="hide-print" type="file" id="file" accept="image/*,.pdf">
+
+<label>Building Length (m)</label><input id="L" type="number" value="14" step="0.1">
+<label>Building Width (m)</label><input id="W" type="number" value="11" step="0.1">
+<label>Wall Height (m)</label><input id="H" type="number" value="3" step="0.1">
+<label>Number of Floors</label><select id="floors"><option>1</option><option>2</option></select>
+<label>Internal Partition Length (m)</label><input id="part" type="number" value="30">
+<label>Price per Block (Naira)</label><input id="blockPrice" type="number" value="550">
+<label>Price per Bag of Cement (Naira)</label><input id="cementPrice" type="number" value="9500">
+
+<button class="hide-print" onclick="calc()">Calculate Bill of Quantities</button>
+<div id="out"></div>
+<button class="hide-print btn2" onclick="window.print()">Download / Print Bill of Quantities as PDF</button>
+<p class="small">HEAVENSGATE | Share this link with other engineers</p>
+</div>
+
+<script>
+function calc(){
+let proj=document.getElementById('proj').value||'Untitled Project';
+let client=document.getElementById('client').value||'-';
+let eng=document.getElementById('eng').value||'HEAVENSGATE Engineer';
+let L=parseFloat(document.getElementById('L').value)||0;
+let W=parseFloat(document.getElementById('W').value)||0;
+let H=parseFloat(document.getElementById('H').value)||3;
+let F=parseFloat(document.getElementById('floors').value)||1;
+let P=parseFloat(document.getElementById('part').value)||0;
+let bp=parseFloat(document.getElementById('blockPrice').value)||550;
+let cp=parseFloat(document.getElementById('cementPrice').value)||9500;
+let perim=2*(L+W);
+let wallLen=(perim+P)*F;
+let wallArea=wallLen*H;
+let blocks=Math.ceil(wallArea*10);
+let cementBags=Math.ceil(blocks/70);
+let sandTons=(wallArea*0.02).toFixed(1);
+let totalBlockCost=blocks*bp;
+let totalCementCost=cementBags*cp;
+let total=totalBlockCost+totalCementCost;
+let date=new Date().toLocaleDateString('en-NG');
+document.getElementById('out').innerHTML=`<div class="result">
+<b>HEAVENSGATE - Bill of Quantities</b><br>
+Date: ${date}<br>
+Project: <b>${proj}</b><br>
+Client: ${client}<br>
+Engineer: ${eng}<br><hr>
+Building: ${L}m x ${W}m | Floors: ${F}<br>
+Perimeter: ${perim.toFixed(1)}m | Total Wall Length: ${wallLen.toFixed(1)}m<br>
+Wall Area: ${wallArea.toFixed(1)} Square Metres<br><hr>
+Blocks (9 inch): <b>${blocks.toLocaleString()} Pieces</b> - N${totalBlockCost.toLocaleString()}<br>
+Cement: <b>${cementBags} Bags</b> - N${totalCementCost.toLocaleString()}<br>
+Sharp Sand: <b>Approximately ${sandTons} Tons</b><br><hr>
+<b>Total (Blocks + Cement): N${total.toLocaleString()}</b><br>
+<small>Please add 5 percent wastage. Confirm with the drawing before pricing.</small>
+</div>`;
+}
+</script></body></html>
