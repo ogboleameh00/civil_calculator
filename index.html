@@ -119,6 +119,9 @@ let dpcL = get('dpcLength') || 0;
 let dpcW = get('dpcWidth') || 0;
 let dpcT = get('dpcThick') || 0;
 let dpcVol = dpcL * dpcW * dpcT;
+  let latTons = latVol * 1.6;
+let hardTons = hardVol * 1.7;
+let dpcTons = dpcVol * 1.6;
 let dpcCement = dpcVol * 6;
 let fWL = get('fWallLength') || 0;
 let fWH = get('fWallHeight') || 0;
@@ -152,7 +155,7 @@ let beamStir = stirNo * 1.25 * sWt;
 let beamTotal = beamMain + beamStir;
 let steel = (colTotal + beamTotal).toFixed(1);
   document.getElementById('result').innerHTML =
-    '<b>Laterite Filling:</b> ' + latVol.toFixed(2) + ' m³ (' + Math.ceil(latVol/10) + ' Trips)<br>' +
+    '<b>Laterite Filling:</b> ' + latVol.toFixed(2) + ' m³ (' + Math.ceil(latVol/10) + ' Trips)+ ' (' + latTons.toFixed(2) + ' Tons)'<br>' +
 '<b>Hardcore 0.30m:</b> ' + hardVol.toFixed(2) + ' m³ (' + Math.ceil(hardVol/10) + ' Trips)<br>' +
 '<b>DPC Slab 0.05m:</b> ' + dpcVol.toFixed(2) + ' m³ - Cement: ' + Math.ceil(dpcCement) + ' bags<br>' +
 '<b>Foundation Blocks:</b> ' + Math.ceil(fBlocks) + ' blocks - Cement: ' + fCement.toFixed(1) + ' bags<br>' +
